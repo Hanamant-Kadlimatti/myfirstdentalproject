@@ -15,7 +15,6 @@ var ApplicationConfiguration = (function () {
     'ui.calendar',
     'GoogleCalendarService',
     'EventUtil',
-    'angular-multi-select',
     'mgcrea.ngStrap',
     'ui.timepicker',
     'ngMaterial',
@@ -667,7 +666,6 @@ eventCreateApp.controller('EventsCreateController',
         function($scope, $googleCalendar, $location, $log, $filter, $compile, prsnlService, $mdDialog, $mdMedia) {
 
 
-            DialogController.$inject = ["$scope", "$mdDialog", "prsnlService"];
             $scope.events = [];
 
             this.selectedDentist = prsnlService.getDentist();
@@ -803,6 +801,7 @@ eventCreateApp.controller('EventsCreateController',
                 $scope.selectedDentist = prsnlService.getDentist();
                 $scope.selectedTreatment = prsnlService.getTreatment();
             }
+            DialogController.$inject = ["$scope", "$mdDialog", "prsnlService"];
 
             $scope.showFailed = function() {
                 var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
@@ -1473,7 +1472,7 @@ personalsApp.controller('PersonalsController', ['$scope', '$stateParams', 'Perso
                 animation: $scope.animationsEnabled,
                 templateUrl: 'modules/personals/views/create-personal.client.view.html',
 
-                controller: ["$scope", "$uibModalInstance", function($scope, $uibModalInstance) {
+                controller: function($scope, $uibModalInstance) {
 
                     $scope.ok = function() {
                         $uibModalInstance.close($scope.personal);
@@ -1483,7 +1482,7 @@ personalsApp.controller('PersonalsController', ['$scope', '$stateParams', 'Perso
                         $uibModalInstance.dismiss('cancel');
                     };
 
-                }],
+                },
                 size: size
             });
 
@@ -1516,7 +1515,7 @@ personalsApp.controller('PersonalsController', ['$scope', '$stateParams', 'Perso
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'modules/personals/views/edit-personal.client.view.html',
-                controller: ["$scope", "$uibModalInstance", "selectedPersonal", function($scope, $uibModalInstance, selectedPersonal) {
+                controller: function($scope, $uibModalInstance, selectedPersonal) {
 
                     $scope.personal = selectedPersonal;
 
@@ -1528,7 +1527,7 @@ personalsApp.controller('PersonalsController', ['$scope', '$stateParams', 'Perso
                         $uibModalInstance.dismiss('cancel');
                     };
 
-                }],
+                },
                 size: size,
                 resolve: {
                     selectedPersonal: function() {
@@ -1555,7 +1554,7 @@ personalsApp.controller('PersonalsController', ['$scope', '$stateParams', 'Perso
 
                 templateUrl: 'modules/personals/views/list-apptslots.client.view.html',
 
-                controller: ["$scope", "$uibModalInstance", "selectedPersonal", "slotService", function($scope, $uibModalInstance, selectedPersonal, slotService) {
+                controller: function($scope, $uibModalInstance, selectedPersonal, slotService) {
 
                     $scope.personal = selectedPersonal;
                     slotService.slotList = selectedPersonal.slots;
@@ -1570,7 +1569,7 @@ personalsApp.controller('PersonalsController', ['$scope', '$stateParams', 'Perso
                         $uibModalInstance.dismiss('cancel');
                     };
 
-                }],
+                },
 
                 size: size,
 
