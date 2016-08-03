@@ -1005,7 +1005,7 @@ angular.module('GoogleCalendarService', [], ["$provide", function($provide){
 		 
 		//var baseUrl = 'http://localhost:3000';
 		
-		var baseUrl = 'https://myfirstdentalproject.herokuapp.com/';
+		var baseUrl = 'https://myfirstdentalproject.herokuapp.com';
  
 		return {
 			load: function(){
