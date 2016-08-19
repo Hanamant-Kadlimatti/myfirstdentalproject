@@ -1007,11 +1007,11 @@ angular.module('GoogleCalendarService', [], ["$provide", function($provide){
 		
 		var baseUrl = 'https://myfirstdentalproject.herokuapp.com';
  
-		return {
+		 return {
 			load: function(){
 				var defer = $q.defer();
 
-				$http.get(baseUrl+'/eventload').then(function(response){
+				$http.get(baseUrl+'/api/loadprofile').then(function(response){
 
 					if(response.status === 200){
 						$scope.$broadcast('GoogleEventsReceived', response.data.items);
@@ -1025,16 +1025,17 @@ angular.module('GoogleCalendarService', [], ["$provide", function($provide){
 
 				});
 
-				return defer.promise;
+				 return defer.promise;
 			},
 			getEvents: function(){
 				var defer = $q.defer();
 
-				$http.get(baseUrl+'/events').then(function(response){
+				$http.get(baseUrl+'/api/events').then(function(response){
 
 					if(response.status === 200){
 						$scope.$broadcast('GoogleEventsReceived', response.data.items);
 						defer.resolve(response.data.items);
+						console.log(response.data.items);
 					}
 
 					else{
@@ -1056,7 +1057,7 @@ angular.module('GoogleCalendarService', [], ["$provide", function($provide){
                     patient: patientInfo
 				};
 
-				$http.post(baseUrl+'/event', postData, {'Content-Type':  'application/json'})
+				$http.post(baseUrl+'/api/events', postData, {'Content-Type':  'application/json'})
                 .then(function(response){
 
 					if(response.status === 200){

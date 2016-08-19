@@ -48,6 +48,7 @@ var errorHandler = require(path.resolve('./modules/core/server/controllers/error
         
         
 
+
 var userProfile=null;
 
 exports.login = function(req, res, next) {
@@ -60,9 +61,19 @@ exports.login = function(req, res, next) {
 
 exports.list = function (req, res, next) {
   
-    var accessToken = req.session.accessToken;
-    var calendarId = req.user._doc.email;
-    var calendar = new gcal.GoogleCalendar(accessToken);
+  
+  User.findOne({ username: 'hanamantrkadlimatti' }, function (err, user) {
+        if (err) {
+            return next(err);
+        } else if (!user) {
+            return next(new Error('Failed to load User '));
+        }
+
+        userProfile = user;
+        
+        var accessToken = userProfile.providerData.accessToken;
+        var calendarId = userProfile.email;
+        var calendar = new gcal.GoogleCalendar(accessToken);
     
     calendar.events.list(calendarId, {'timeMin': new Date().toISOString()}, function(err, eventList) {
         
@@ -79,6 +90,10 @@ exports.list = function (req, res, next) {
         }
         
     });
+    
+    });
+    
+    
 };
 
 
@@ -154,7 +169,7 @@ exports.create = function (req, res, next) {
 
 };
 
-exports.load = function (req, res, next) { 
+exports.loadprofile = function (req, res, next) { 
   User.findOne({
     username: 'hanamantrkadlimatti'
   }, function (err, user) {
@@ -168,4 +183,5 @@ exports.load = function (req, res, next) {
 
   });
 };
+
 
